@@ -1,0 +1,21 @@
+### Configuration : EDIT VARIABLES HERE!
+# IP address of the host for STONITH network
+# Note: root login without password must be allowed from guest VMs
+HOST=192.168.122.1
+
+# mapping from IPMI LAN IP address to VM name, concat with ':'
+# the IP addresses are not necessary being reachable
+VMCONFIG="
+192.168.99.27:centos73-1
+192.168.99.28:centos73-2
+192.168.99.65:devnode65-rhel64-pm11
+192.168.99.66:devnode66-rhel64-pm11
+"
+# user and password of IPMI LAN port
+USER=pacemaker
+PASSWORD=pacemakerpass
+
+# logfile for debugging
+LOGFILE=/tmp/ipmitool-fake.log
+#LOGFILE=/dev/null
+
