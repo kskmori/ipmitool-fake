@@ -16,14 +16,18 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Default value for config params
-LOGFILE=/dev/null
+### read config
+if [ -r /etc/ipmitool-fake.conf ]; then
+    . /etc/ipmitool-fake.conf
+else
+    echo "/etc/ipmitool-fake.conf not found" 1>&2
+    exit 1
+fi
 
 ### utilities
-VIRSH=/usr/bin/virsh
+#VIRSH=/usr/bin/virsh
+VIRSH="ssh -l root $HOST LANG=C /usr/bin/virsh"
 hypervisor_uri="qemu:///session"
-unset LANG
-export LANG=C
 
 error_exit() {
     echo "$*" 1>&2
@@ -38,13 +42,6 @@ ha_log.sh() {
 ### main
 
 echo "$(date) invoked: $0 $*" >>$LOGFILE
-
-# check config
-if [ -r /etc/ipmitool-fake.conf ]; then
-    . /etc/ipmitool-fake.conf
-else
-    error_exit "/etc/ipmitool-fake.conf not found"
-fi
 
 OPT=$(getopt -o I:H:L:U:P:Ef: -n ipmitool-fake -- "$@")
 if [ $? != 0 ]; then
