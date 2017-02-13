@@ -38,6 +38,9 @@ install:
 rpm: dist
 	rpmbuild -bb $(SPECFILE)
 
+preview:
+	grip README.md
+
 clean:
 	rm -f *~
 	rm -f ipmitool-fake.conf
