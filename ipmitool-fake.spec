@@ -8,7 +8,7 @@ Group:          System Environment/Base
 License:        GPL
 URL:            http://osdn.jp/projects/linux-ha/
 #Source0:        %{name}-%{version}-%{release}.%{_arch}.tar.gz
-Source0:        ipmitool-fake.tar.gz
+Source0:        ipmitool-fake.tar.bz2
 BuildArch: noarch
 
 #BuildRequires:  

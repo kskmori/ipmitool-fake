@@ -16,12 +16,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-### read config
+### read default config
+. /usr/share/ipmitool-fake/ipmitool-fake.conf
+
+### read custom config if exists
 if [ -r /etc/ipmitool-fake.conf ]; then
     . /etc/ipmitool-fake.conf
-else
-    echo "/etc/ipmitool-fake.conf not found" 1>&2
-    exit 1
 fi
 
 ### utilities
