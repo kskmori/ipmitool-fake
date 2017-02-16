@@ -3,6 +3,7 @@ SPECFILE=ipmitool-fake.spec
 
 DISTDIR=ipmitool-fake
 TARFILE=ipmitool-fake.tar
+RPMFILE=ipmitool-fake-0.1-1.noarch.rpm
 
 INSTALL=/usr/bin/install
 
@@ -38,11 +39,23 @@ install:
 rpm: dist
 	rpmbuild -bb $(SPECFILE)
 
+ansible-install:
+	cp -p  $$(rpm --eval %{_rpmdir})/noarch/$(RPMFILE) ./ansible/roles/ipmitool-fake-install/files/
+	(cd ansible; ansible-playbook -i hosts 10-ipmitool-fake-install.yml)
+
+ansible-uninstall:
+	(cd ansible; ansible-playbook -i hosts 99-ipmitool-fake-uninstall.yml)
+
 preview:
 	grip README.md
 
+distclean: clean
+	rm -f ipmitool-fake.conf
+	rm -f ./ansible/hosts
+
 clean:
 	rm -f *~
-	rm -f ipmitool-fake.conf
 	rm -f $(TARFILE).bz2
 	rm -rf $(DISTDIR)/
+	rm -f ./ansible/*.retry
+	rm -f ./ansible/roles/ipmitool-fake-install/files/*

@@ -1,0 +1,6 @@
+- hosts: all
+  user: root
+  max_fail_percentage: 0
+
+  roles:
+    - { role: ipmitool-fake-uninstall }

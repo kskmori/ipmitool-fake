@@ -1,0 +1,5 @@
+- name: uninstall ipmitool-fake package
+  yum: name="{{ item }}" state=absent
+  with_items:
+    - ipmitool-fake
+
