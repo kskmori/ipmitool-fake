@@ -15,6 +15,10 @@ VMCONFIG="
 USER=pacemaker
 PASSWORD=pacemakerpass
 
+# reset method : default is power_cycle as in external/libvirt
+#RESET_METHOD=power_cycle
+#RESET_METHOD=reboot
+
 # logfile for debugging
 LOGFILE=/tmp/ipmitool-fake.log
 #LOGFILE=/dev/null

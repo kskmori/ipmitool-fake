@@ -28,6 +28,7 @@ fi
 #VIRSH=/usr/bin/virsh
 VIRSH="ssh -l root $HOST LANG=C /usr/bin/virsh"
 hypervisor_uri="qemu:///session"
+RESET_METHOD=${RESET_METHOD:-"power_cycle"}
 
 error_exit() {
     echo "$*" 1>&2
@@ -130,6 +131,14 @@ libvirt_start() {
     return 1
 }
 
+# reboot a domain by power cycle
+libvirt_power_cycle() {
+    libvirt_stop
+    [ $? = 1 ] && exit 1
+    sleep 2
+    libvirt_start
+}
+
 # reboot a domain
 # return
 #   0: success
@@ -193,7 +202,11 @@ libvirt_status() {
 
 case "$@" in
     "power reset")
-        libvirt_reboot
+        if [ "$RESET_METHOD" = "power_cycle" ]; then
+            libvirt_power_cycle
+        else
+            libvirt_reboot
+        fi
         ;;
     "power off")
         libvirt_stop
